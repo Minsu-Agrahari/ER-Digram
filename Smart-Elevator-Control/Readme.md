@@ -3,4 +3,4 @@
 * [🔗 Eraser Link](https://app.eraser.io/workspace/BX8rz9zWOW0bM4lWkQNh?origin=share)
 
 ## ER Diagram :- 
-![ERDiagram](./Smart-Elevator.png)
+![ERDiagram](./public/Smart-Elevator.png)

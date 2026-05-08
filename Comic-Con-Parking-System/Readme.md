@@ -5,6 +5,6 @@
 
 
 ## ER-Diagram :-
-![ERDiagram](./Comic-Con%20Parking%20System.png)
+![ERDiagram](./public/Comic-Con%20Parking%20System.png)
 
 ---

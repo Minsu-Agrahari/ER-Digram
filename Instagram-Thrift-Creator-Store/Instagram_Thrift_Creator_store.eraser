@@ -1,0 +1,103 @@
+Customer [icon: user, color: blue] {
+  customer_id INT pk
+  full_name VARCHAR
+  email VARCHAR
+  phone VARCHAR
+  instagram_handle VARCHAR
+  address VARCHAR
+  city VARCHAR
+  state VARCHAR
+  pincode VARCHAR
+  created_at DATETIME
+  update_at DATETIME
+}
+
+ProductType [icon: shopping-bag, color: green] {
+  type_id INT pk
+  type_name VARCHAR
+  created_at DATETIME
+  update_at DATETIME
+}
+
+Category [icon: magnifying-glass, color: orange] {
+  category_id INT pk
+  category_name VARCHAR
+  created_at DATETIME
+  update_at DATETIME
+}
+
+Product [icon: shopping-basket, color: purple] {
+  product_id INT pk
+  type_id INT fk
+  category_id INT fk
+  product_name VARCHAR
+  description TEXT
+  size VARCHAR
+  color VARCHAR
+  condition VARCHAR
+  price DECIMAL
+  is_unique BOOLEAN
+  created_at DATETIME
+  update_at DATETIME 
+}
+
+Inventory [icon: aws-storage, color: red] {
+  inventory_id INT pk
+  product_id INT fk
+  quantity_avilable INT
+  created_at DATETIME
+  update_at DATETIME
+}
+
+Order [icon: list-ordered, color: silver] {
+  order_id INT pk
+  customer_id INT fk
+  order_date DATETIME
+  total_amount DECIMAL
+  order_status VARCHAR
+}
+
+OrderItem [icon: baggage-claim, color: yellow] {
+  order_item_id INT pk
+  order_id INT fk
+  product_id INT fk
+  quantity INT
+  item_price DECIMAL
+}
+
+Payment [icon: money, color: green] {
+  payment_id INT pk
+  order_id INT fk
+  payment_date DATETIME
+  amount DECIMAL
+  payment_method VARCHAR
+  payment_status VARCHAR
+  transaction_reference VARCHAR
+}
+
+Shipment [icon: ship, color: blue] {
+  shipment_id INT pk
+  order_id INT fk
+  courier_name VARCHAR
+  tracking_number VARCHAR
+  shipped_date DATETIME
+  delivered_date DATETIME
+  shipping_status VARCHAR
+}
+
+// Relationship
+Customer.customer_id < Order.customer_id
+
+Order.order_id < OrderItem.order_id
+
+Product.product_id < OrderItem.product_id
+
+ProductType.type_id < Product.type_id
+
+Category.category_id < Product.category_id
+
+Product.product_id - Inventory.product_id
+
+Order.order_id < Payment.order_id
+
+Order.order_id - Shipment.order_id

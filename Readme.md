@@ -1,3 +1,3 @@
-# DB-Design
+# DB-Design:
 
 ![CoverImage](./public/CoverImage.png)
