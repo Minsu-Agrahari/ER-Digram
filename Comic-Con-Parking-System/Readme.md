@@ -1,9 +1,5 @@
 # ER Diagram [Comic-Con-Parking System]
 
-
+[Comic-con-Eraser-ER-Diagram-Link](https://app.eraser.io/workspace/YAEe3Lv5bFckHakPISNQ)
 
 ![ERDiagram](./Comic-Con%20Parking%20System.png)
-
-./Comic-Con%20Parking%20System.png
-
-<img src="./Comic-Con Parking System.png" width="700"/>
