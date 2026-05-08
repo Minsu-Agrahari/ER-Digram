@@ -1,0 +1,56 @@
+Building [icon: building, color: blue] {
+  building_id INT pk
+  building_name VARCHAR
+  address VARCHAR
+}
+
+Floor [icon: lamp-floor, color: yellow] {
+  floor_id INT pk
+  floor_number INT
+  building_id INT fk
+}
+
+Elevator [icon: box, color: silver] {
+  elevator_id INT pk
+  elevator_name VARCHAR
+  building_id INT fk
+  status VARCHAR
+}
+
+ElevatorFloor [icon: flag, color: pink] {
+  id INT pk
+  floor_id INT fk
+  elevator_id INT fk
+}
+
+FloorRequest [icon: git-pull-request, color: green] {
+  request_id INT pk
+  source_floor_id INT fk
+  destination_floor_id INT fk
+  elevator_id INT fk
+  request_time DATETIME
+  request_status VARCHAR
+}
+
+Maintenance [icon: settings, color: orange] {
+  maintenance_id INT pk
+  elevator_id INT fk
+  issue TEXT
+  maintenance_date DATETIME
+}
+
+Building.building_id < Floor.building_id
+
+Building.building_id < Elevator.building_id
+
+Elevator.elevator_id < ElevatorFloor.elevator_id
+
+Floor.floor_id < ElevatorFloor.floor_id
+
+Elevator.elevator_id < FloorRequest.elevator_id
+
+Floor.floor_id < FloorRequest.source_floor_id
+
+Floor.floor_id < FloorRequest.destination_floor_id
+
+Elevator.elevator_id < Maintenance.elevator_id
