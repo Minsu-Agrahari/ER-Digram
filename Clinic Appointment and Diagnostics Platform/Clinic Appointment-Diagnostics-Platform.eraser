@@ -1,0 +1,127 @@
+Patient [icon: user-plus, color: black] {
+  patient_id INT pk
+  full_name VARCHAR
+  gender VARCHAR
+  date_of_birth DATE
+  phone VARCHAR
+  email VARCHAR
+  address TEXT
+  blood_group VARCHAR
+  emergency_contact VARCHAR
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+Specialty [icon: stethoscope, color: blue] {
+  specialty_id INT pk
+  specialty_name VARCHAR
+  description TEXT
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+Doctor [icon: plus, color: green] {
+  doctor_id INT pk
+  specialty_id INT fk
+  full_name VARCHAR
+  phone VARCHAR
+  email VARCHAR
+  qualification VARCHAR
+  experience_years INT
+  consultation_fee DECIMAL
+  availability_status VARCHAR
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+Appointment [icon: app-window, color: orange] {
+  appointment_id INT pk
+  patient_id INT fk
+  doctor_id INT fk
+  appointment_date DATETIME
+  appointment_status VARCHAR
+  booking_source VARCHAR
+  reason_for_visit TEXT
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+Consultation [icon: notebook-pen, color: purple] {
+  consultation_id INT pk
+  appointment_id INT fk
+  patient_id INT fk
+  doctor_id INT fk
+  consultation_date DATETIME
+  symptoms TEXT
+  diagnosis TEXT
+  prescription_notes TEXT
+  follow_up_date DATE
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+DiagnosticTest [icon: test-tube-diagonal, color: red] {
+  test_id INT pk
+  test_name VARCHAR
+  description TEXT
+  test_fee DECIMAL
+  report_delivery_time VARCHAR
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+ConsultationTest [icon: test-tubes, color: gray] {
+  consultation_test_id INT pk
+  consultation_id INT fk
+  test_id INT fk
+  test_status VARCHAR
+  prescribed_date DATETIME
+  sample_collected_at DATETIME
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+Report [icon: file-text, color: yellow] {
+  report_id INT pk
+  consultation_test_id INT fk
+  generated_at DATETIME
+  report_summary TEXT
+  report_file_url VARCHAR
+  remarks TEXT
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+Payment [icon: wallet, color: green] {
+  payment_id INT pk
+  consultation_id INT fk
+  amount DECIMAL
+  payment_date DATETIME
+  payment_method VARCHAR
+  payment_status VARCHAR
+  transaction_reference VARCHAR
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+// Relationships
+
+Patient.patient_id < Appointment.patient_id
+
+Doctor.doctor_id < Appointment.doctor_id
+
+Specialty.specialty_id < Doctor.specialty_id
+
+Appointment.appointment_id - Consultation.appointment_id
+
+Patient.patient_id < Consultation.patient_id
+
+Doctor.doctor_id < Consultation.doctor_id
+
+Consultation.consultation_id < ConsultationTest.consultation_id
+
+DiagnosticTest.test_id < ConsultationTest.test_id
+
+ConsultationTest.consultation_test_id - Report.consultation_test_id
+
+Consultation.consultation_id - Payment.consultation_id
