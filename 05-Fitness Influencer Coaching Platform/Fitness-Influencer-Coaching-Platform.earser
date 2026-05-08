@@ -1,0 +1,161 @@
+User [icon: user, color: blue] {
+  user_id INT pk
+  full_name VARCHAR
+  email VARCHAR unique
+  phone VARCHAR
+  password_hash VARCHAR
+  gender VARCHAR
+  date_of_birth DATE
+  role ENUM('CLIENT', 'TRAINER', 'ADMIN')
+  profile_image VARCHAR
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+TrainerProfile [icon: dumbbell, color: orange] {
+  trainer_id INT pk
+  user_id INT fk
+  specialization VARCHAR
+  experience_years INT
+  bio TEXT
+  certification VARCHAR
+  consultation_fee DECIMAL
+  social_links VARCHAR
+  created_at DATETIME
+}
+
+ClientProfile [icon: activity, color: green] {
+  client_id INT pk
+  user_id INT fk
+  height_cm DECIMAL
+  current_weight_kg DECIMAL
+  fitness_goal VARCHAR
+  activity_level VARCHAR
+  medical_conditions TEXT
+  joined_at DATETIME
+}
+
+Program [icon: clipboard-list, color: purple] {
+  program_id INT pk
+  trainer_id INT fk
+  program_name VARCHAR
+  description TEXT
+  difficulty_level VARCHAR
+  duration_weeks INT
+  price DECIMAL
+  program_type ENUM('CONSULTATION', 'COACHING', 'WORKOUT', 'DIET')
+  created_at DATETIME
+}
+
+Subscription [icon: credit-card, color: red] {
+  subscription_id INT pk
+  client_id INT fk
+  program_id INT fk
+  start_date DATE
+  end_date DATE
+  status ENUM('ACTIVE', 'EXPIRED', 'CANCELLED')
+  payment_status ENUM('PAID', 'PENDING', 'FAILED')
+  created_at DATETIME
+}
+
+Payment [icon: wallet, color: yellow] {
+  payment_id INT pk
+  subscription_id INT fk
+  amount DECIMAL
+  payment_method VARCHAR
+  transaction_reference VARCHAR
+  payment_date DATETIME
+  payment_status ENUM('SUCCESS', 'FAILED', 'REFUNDED')
+}
+
+ConsultationSession [icon: video, color: cyan] {
+  session_id INT pk
+  trainer_id INT fk
+  client_id INT fk
+  subscription_id INT fk
+  session_type ENUM('VIDEO_CALL', 'PHONE_CALL', 'LIVE_SESSION')
+  scheduled_at DATETIME
+  duration_minutes INT
+  meeting_link VARCHAR
+  session_status ENUM('SCHEDULED', 'COMPLETED', 'CANCELLED')
+  notes TEXT
+}
+
+WorkoutPlan [icon: flame, color: orange] {
+  workout_plan_id INT pk
+  program_id INT fk
+  title VARCHAR
+  description TEXT
+  created_at DATETIME
+}
+
+DietPlan [icon: apple, color: green] {
+  diet_plan_id INT pk
+  program_id INT fk
+  title VARCHAR
+  description TEXT
+  calorie_target INT
+  created_at DATETIME
+}
+
+CheckIn [icon: calendar-check, color: blue] {
+  checkin_id INT pk
+  client_id INT fk
+  trainer_id INT fk
+  subscription_id INT fk
+  checkin_date DATE
+  energy_level VARCHAR
+  adherence_score INT
+  notes TEXT
+  created_at DATETIME
+}
+
+ProgressTracking [icon: chart-line, color: pink] {
+  progress_id INT pk
+  client_id INT fk
+  checkin_id INT fk
+  weight_kg DECIMAL
+  chest_cm DECIMAL
+  waist_cm DECIMAL
+  body_fat_percentage DECIMAL
+  progress_photos VARCHAR
+  recorded_at DATETIME
+}
+
+TrainerFeedback [icon: message-square, color: gray] {
+  feedback_id INT pk
+  trainer_id INT fk
+  client_id INT fk
+  checkin_id INT fk
+  feedback_text TEXT
+  recommendations TEXT
+  created_at DATETIME
+}
+
+User.user_id < TrainerProfile.user_id
+User.user_id < ClientProfile.user_id
+
+TrainerProfile.trainer_id < Program.trainer_id
+
+ClientProfile.client_id < Subscription.client_id
+Program.program_id < Subscription.program_id
+
+Subscription.subscription_id < Payment.subscription_id
+
+TrainerProfile.trainer_id < ConsultationSession.trainer_id
+ClientProfile.client_id < ConsultationSession.client_id
+Subscription.subscription_id < ConsultationSession.subscription_id
+
+Program.program_id < WorkoutPlan.program_id
+Program.program_id < DietPlan.program_id
+
+ClientProfile.client_id < CheckIn.client_id
+TrainerProfile.trainer_id < CheckIn.trainer_id
+Subscription.subscription_id < CheckIn.subscription_id
+
+CheckIn.checkin_id < ProgressTracking.checkin_id
+ClientProfile.client_id < ProgressTracking.client_id
+
+TrainerProfile.trainer_id < TrainerFeedback.trainer_id
+ClientProfile.client_id < TrainerFeedback.client_id
+CheckIn.checkin_id < TrainerFeedback.checkin_id
