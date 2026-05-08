@@ -1,3 +1,3 @@
 # DB-Design
 
-[CoverImage](./CoverImage.png)
+![CoverImage](./CoverImage.png)
